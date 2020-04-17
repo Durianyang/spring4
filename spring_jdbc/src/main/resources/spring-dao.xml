@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+    <context:component-scan base-package="top.ywlog.dao"/>
+
+    <!--数据源-->
+    <bean name="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <!-- 数据库基本配置 -->
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/test?characterEncoding=utf8&amp;useSSL=false"/>
+        <property name="username" value="root"/>
+        <property name="password" value="19981016"/>
+
+        <property name="maxActive" value="100"/>
+        <property name="maxIdle" value="10"/>
+        <property name="maxWait" value="10000"/>
+        <property name="minIdle" value="5"/>
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+</beans>

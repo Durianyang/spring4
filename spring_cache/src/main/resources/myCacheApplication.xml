@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/aop
+    https://www.springframework.org/schema/aop/spring-aop.xsd
+    http://www.springframework.org/schema/cache
+    http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+    <context:component-scan base-package="top.ywlog.mycache"/>
+
+    <!-- 缓存注解开启 -->
+    <cache:annotation-driven/>
+
+    <!-- 配置默认的cache管理器SimpleCacheManage -->
+    <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+        <property name="caches">
+            <set>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
+                      p:name="default"/>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
+                      p:name="users"/>
+            </set>
+        </property>
+    </bean>
+
+    <!-- 直接配置ConcurrentMapCacheManager -->
+    <!--<bean id="cacheManager" class="org.springframework.cache.concurrent.ConcurrentMapCacheManager"
+          p:cacheNames="users"/>-->
+
+    <!-- XML方式配置缓存 -->
+    <!--<aop:config proxy-target-class="true">
+        <aop:advisor advice-ref="cacheAdvice"
+                     pointcut="execution(* top.ywlog.mycache.service.UserService.*(..))"/>
+    </aop:config>
+
+    <cache:advice id="cacheAdvice" cache-manager="cacheManager">
+        <cache:caching cache="users" key="'user_' + #id">
+            <cache:cacheable method="getOne"/>
+            <cache:cache-put method="updateUser"
+                             condition="#root.method.name.contains('update') &amp;&amp; #result != null"/>
+            <cache:cache-evict method="delete"/>
+        </cache:caching>
+    </cache:advice>-->
+
+
+</beans>

@@ -1,0 +1,32 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+<!--    <context:annotation-config/>-->
+    <context:component-scan base-package="top.ywlog"/>
+
+    <bean id="car" class="top.ywlog.bean.Car" scope="singleton">
+<!--        <property name="brand" value="红旗"/>-->
+<!--        <property name="maxSpeed" value="200"/>-->
+        <constructor-arg index="0" value="红旗"/>
+        <constructor-arg index="1" value="红色"/>
+        <constructor-arg index="2" value="200"/>
+    </bean>
+
+    <!--用来测试MyInstantiationAwareBeanPostProcessor的postProcessBeforeInstantiation方法-->
+    <bean id="mobile" class="top.ywlog.bean.Mobile" scope="prototype">
+        <property name="name" value="iPhone"/>
+    </bean>
+
+<!--    <bean class="org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor"/>-->
+
+    <!--  ApplicationContext使用时，将后置处理器配置在xml中，而不需要像BeanFactory那样手动添加PostProcessor  -->
+    <!-- 或者使用注解@Compoment -->
+<!--    <bean id="myBeanFactoryPostProcessor" class="top.ywlog.extension.MyBeanFactoryPostProcessor"/>-->
+<!--    <bean id="myInstantiation" class="top.ywlog.extension.MyInstantiationAwareBeanPostProcessor"/>-->
+<!--    <bean id="myBeanPostProcessor" class="top.ywlog.extension.MyBeanPostProcessor"/>-->
+</beans>
