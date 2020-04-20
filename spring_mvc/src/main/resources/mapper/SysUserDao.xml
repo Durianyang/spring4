@@ -93,6 +93,7 @@
             <if test="updateTime != null">
                 update_time = #{updateTime},
             </if>
+            id = #{id} <!--  如果更新参数都为空，则必须要有语句 -->
         </set>
         where id = #{id}
     </update>
